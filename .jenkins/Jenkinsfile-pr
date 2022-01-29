@@ -5,11 +5,11 @@ def lib
 def DEFAULT_EXCLUDED_GROUPS = "loadbalancer,networkpolicies"
 
 pipeline {
-    agent {
-        node {
-            label "strimzi-pr"
-        }
-    }
+    //agent {
+    //    node {
+    //        label "strimzi-pr"
+    //    }
+    //}
     parameters {
         string(name: 'TEST_CASE', defaultValue: '*ST', description: 'maven parameter for executing specific tests')
         string(name: 'TEST_PROFILE', defaultValue: 'all', description: 'maven parameter for executing specific test profile')
@@ -19,7 +19,7 @@ pipeline {
     }
     options {
         timeout(time: 24, unit: 'HOURS')
-        ansiColor('xterm')
+    //    ansiColor('xterm')
     }
     environment {
         ARTIFACTS_DIR = 'systemtest/target/logs'
