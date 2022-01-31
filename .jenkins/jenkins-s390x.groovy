@@ -36,7 +36,7 @@ def buildStrimziImages() {
 
 def runSystemTests(String workspace, String testCases, String testProfile, String testGroups, String excludeGroups, String testsInParallel) {
     def groupsTag = testGroups.isEmpty() ? "" : "-Dgroups=${testGroups} "
-    withMaven(mavenOpts: '-Djansi.force=true') {
+    //withMaven(mavenOpts: '-Djansi.force=true') {
         sh(script: "mvn -f ${workspace}/systemtest/pom.xml verify " +
             "-P${testProfile} " +
             "${groupsTag}" +
@@ -50,7 +50,7 @@ def runSystemTests(String workspace, String testCases, String testProfile, Strin
             "-Djunit.jupiter.execution.parallel.enabled=true " +
             // sequence mode with testInParallel=1 otherwise parallel
             "-Djunit.jupiter.execution.parallel.config.fixed.parallelism=${testsInParallel}")
-    }
+    //}
 }
 
 def postAction(String artifactDir, String prID, String prAuthor, String prTitle, String prUrl, String buildUrl, String workspace, String address) {

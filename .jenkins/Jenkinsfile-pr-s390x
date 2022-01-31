@@ -118,6 +118,8 @@ pipeline {
                     println("ENV_VARS: ${env.ENV_VARS}")
                     env.BUILD_PROJECT_STATUS = false
                     env.BUILD_DOCKER_IMAGE_STATUS = false
+                    env.MINIKUBE_MEMORY=8192
+                    env.MINIKUBE_CPU=4
                     println("TEST_ONLY: ${env.TEST_ONLY}")
                     println("DOCKER_REGISTRY: ${env.DOCKER_REGISTRY}")
                     println("DOCKER_ORG: ${env.DOCKER_ORG}")
