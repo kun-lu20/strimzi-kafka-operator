@@ -4,7 +4,6 @@ def setupKubernetes() {
     sh(script: "sudo setenforce 0")
     // Install conntrack
     sh(script: "sudo yum install -y conntrack")
-    sh(script: "minikube stop")
     sh(script: "${workspace}/.azure/scripts/setup-kubernetes-s390x.sh")
     //sh(script: "minikube start --driver docker --cpus=4 --memory=8192")
 }
