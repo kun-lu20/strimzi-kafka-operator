@@ -32,6 +32,7 @@ pipeline {
         TEST_HELM3_VERSION = "v3.4.2"
         TEST_CLUSTER = "minikube"
         COPY_DOCKER_LOGIN = "true"
+        ghprbCommentBody="ok to test"
     }
     stages {
         stage('Clean WS') {
