@@ -164,6 +164,7 @@ pipeline {
                         sh(script: "mvn clean install -DskipTests -Dstyle.color=always --no-transfer-progress")
                         env.BUILD_PROJECT_STATUS = true
                     }*/
+                    sh(script: "mvn --version")
                     sh(script: "make MVN_ARGS='-DskipTests' java_install")
                     env.BUILD_PROJECT_STATUS = true
                 }
