@@ -32,7 +32,7 @@ pipeline {
         TEST_HELM3_VERSION = "v3.4.2"
         TEST_CLUSTER = "minikube"
         COPY_DOCKER_LOGIN = "true"
-        ghprbCommentBody="ok to test"
+        ghprbCommentBody="ok to test test_only"
     }
     stages {
         stage('Clean WS') {
@@ -148,7 +148,8 @@ pipeline {
             steps {
                 timeout(time: 5, unit: 'MINUTES') {
                     script {
-                        lib.installYq(env.WORKSPACE)
+                        //lib.installYq(env.WORKSPACE)
+                        println("yq installed")
                     }
                 }
             }
@@ -169,10 +170,11 @@ pipeline {
             }
             steps {
                 script {
-                    lib.setupShellheck()
+                    //lib.setupShellheck()
+                    println("shellcheck installed")
                     lib.buildStrimziImages()
                     env.BUILD_DOCKER_IMAGE_STATUS = true
-                    env.DOCKER_REGISTRY = sh(script: "kubectl get service registry -n kube-system -o=jsonpath='{.spec.clusterIP}'", returnStdout: true).trim() + ":80"
+                    //env.DOCKER_REGISTRY = sh(script: "kubectl get service registry -n kube-system -o=jsonpath='{.spec.clusterIP}'", returnStdout: true).trim() + ":80"
                     println("DOCKER_REGISTRY: ${env.DOCKER_REGISTRY}")
                 }
             }
@@ -203,7 +205,7 @@ pipeline {
         always {
             script {
                 sh(script: "minikube stop")
-                sh(script: "minikube start")
+                sh(script: "minikube delete")
                 sh(script: "sudo ./systemtest/scripts/results_info.sh ./systemtest/target/failsafe-reports/ ${env.TEST_CASE} ${env.TEST_PROFILE} ${env.BUILD_NUMBER} ${env.KUBE_VERSION} ${env.TEST_ONLY} ${env.TEST_COUNT_RUNNING_IN_PARALLEL} ${env.EXCLUDE_GROUPS} ${env.ENV_VARS}")
                 lib.postGithubPrComment("results.json")
                 lib.postAction(env.ARTIFACTS_DIR, env.ghprbPullId, env.ghprbActualCommitAuthor, env.ghprbPullTitle, env.ghprbPullLink, env.BUILD_URL, env.WORKSPACE, env.STRIMZI_MAILING_LIST)

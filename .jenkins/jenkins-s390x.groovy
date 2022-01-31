@@ -4,7 +4,9 @@ def setupKubernetes() {
     sh(script: "sudo setenforce 0")
     // Install conntrack
     sh(script: "sudo yum install -y conntrack")
-    sh(script: "minikube start --driver docker --cpus=4 --memory=8192")
+    sh(script: "minikube stop")
+    sh(script: "${workspace}/.azure/scripts/setup-kubernetes-s390x.sh")
+    //sh(script: "minikube start --driver docker --cpus=4 --memory=8192")
 }
 
 def setupShellheck() {
@@ -27,7 +29,10 @@ def installYq(String workspace) {
 def buildStrimziImages() {
     sh(script: """
         eval \$(minikube docker-env)
-        MVN_ARGS='-Dsurefire.rerunFailingTestsCount=5 -Dfailsafe.rerunFailingTestsCount=2' make all
+        #MVN_ARGS='-Dsurefire.rerunFailingTestsCount=5 -Dfailsafe.rerunFailingTestsCount=2' make all
+        make MVN_ARGS='-DskipTests' java_install
+        make MVN_ARGS='-DskipTests' docker_build
+        make docker_tag
     """)
 }
 
