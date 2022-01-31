@@ -22,7 +22,7 @@ def installHelm(String workspace) {
 }
 
 def installYq(String workspace) {
-    sh(script: "${workspace}/.azure/scripts/install_yq.sh")
+    sh(script: "${workspace}/.azure/scripts/install_yq-s390x.sh")
 }
 
 def buildStrimziImages() {

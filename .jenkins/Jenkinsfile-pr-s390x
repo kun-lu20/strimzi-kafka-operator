@@ -32,7 +32,9 @@ pipeline {
         TEST_HELM3_VERSION = "v3.4.2"
         TEST_CLUSTER = "minikube"
         COPY_DOCKER_LOGIN = "true"
-        ghprbCommentBody="ok to test test_only"
+        ghprbCommentBody = "ok to test test_only"
+        JAVA_HOME = "/usr/lib/jvm/java-11-openjdk"
+        PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
     }
     stages {
         stage('Clean WS') {
@@ -123,6 +125,8 @@ pipeline {
                     println("CLUSTER_OPERATOR_INSTALL_TYPE: ${env.CLUSTER_OPERATOR_INSTALL_TYPE}")
                     println("KUBE_VERSION: ${env.KUBE_VERSION}")
                     println("TEST_COUNT_RUNNING_IN_PARALLEL: ${env.TEST_COUNT_RUNNING_IN_PARALLEL}")
+                    println("JAVA_HOME: ${env.JAVA_HOME}")
+                    println("PATH: ${env.PATH}}")
                 }
             }
         }
@@ -148,8 +152,7 @@ pipeline {
             steps {
                 timeout(time: 5, unit: 'MINUTES') {
                     script {
-                        //lib.installYq(env.WORKSPACE)
-                        println("yq installed")
+                        lib.installYq(env.WORKSPACE)
                     }
                 }
             }
