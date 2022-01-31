@@ -35,6 +35,8 @@ pipeline {
         ghprbCommentBody = "ok to test test_only"
         JAVA_HOME = "/usr/lib/jvm/java-11-openjdk"
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+        DOCKER_BUILDX = "buildx"
+        DOCKER_BUILD_ARGS = "--platform linux/s390x --load"
     }
     stages {
         stage('Clean WS') {
