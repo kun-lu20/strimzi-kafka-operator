@@ -157,16 +157,18 @@ pipeline {
         stage('Build project') {
             steps {
                 script {
-                    withMaven(mavenOpts: '-Djansi.force=true') {
+                    /*withMaven(mavenOpts: '-Djansi.force=true') {
                         sh(script: "mvn clean install -DskipTests -Dstyle.color=always --no-transfer-progress")
                         env.BUILD_PROJECT_STATUS = true
-                    }
+                    }*/
+                    sh(script: "make MVN_ARGS='-DskipTests' java_install")
+                    env.BUILD_PROJECT_STATUS = true
                 }
             }
         }
         stage('Build images') {
             when {
-                environment name: 'TEST_ONLY', value: 'false'
+                environment name: 'TEST_ONLY', value: 'true'
             }
             steps {
                 script {
