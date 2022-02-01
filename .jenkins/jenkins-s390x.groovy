@@ -25,6 +25,10 @@ def installYq(String workspace) {
     sh(script: "${workspace}/.azure/scripts/install_yq-s390x.sh")
 }
 
+def buildKeycloak(String workspace) {
+    sh(script: "${workspace}/.azure/scripts/build_keycloak-s390x.sh")
+}
+
 def buildStrimziImages() {
     sh(script: """
         eval \$(minikube docker-env)

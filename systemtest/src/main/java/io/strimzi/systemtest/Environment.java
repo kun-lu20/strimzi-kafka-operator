@@ -159,7 +159,8 @@ public class Environment {
 
     private static final String ST_KAFKA_VERSION_DEFAULT = TestKafkaVersion.getDefaultSupportedKafkaVersion();
     private static final String ST_CLIENTS_KAFKA_VERSION_DEFAULT = "3.0.0";
-    public static final String TEST_CLIENTS_VERSION_DEFAULT = "0.1.1";
+    //public static final String TEST_CLIENTS_VERSION_DEFAULT = "0.1.1";
+    public static final String TEST_CLIENTS_VERSION_DEFAULT = "latest";
 
     /**
      * Set values

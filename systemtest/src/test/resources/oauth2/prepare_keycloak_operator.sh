@@ -22,7 +22,8 @@ kubectl apply -n ${NAMESPACE} -f https://github.com/keycloak/keycloak-operator/r
 kubectl apply -n ${NAMESPACE} -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/crds/keycloak.org_keycloakrealms_crd.yaml
 kubectl apply -n ${NAMESPACE} -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/crds/keycloak.org_keycloaks_crd.yaml
 kubectl apply -n ${NAMESPACE} -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/crds/keycloak.org_keycloakusers_crd.yaml
-kubectl apply -n ${NAMESPACE} -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/operator.yaml
+#kubectl apply -n ${NAMESPACE} -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/operator.yaml
+curl -s https://raw.githubusercontent.com/keycloak/keycloak-operator/${KEYCLOAK_VERSION}/deploy/operator.yaml | sed "s#Always#IfNotPresent#g" | kubectl apply -n ${NAMESPACE} -f -
 echo "[INFO] $(date -u +"%Y-%m-%d %H:%M:%S") Deploy Keycloak instance"
 kubectl apply -n ${NAMESPACE} -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/examples/keycloak/keycloak.yaml
 

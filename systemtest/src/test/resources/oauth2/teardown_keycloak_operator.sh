@@ -8,7 +8,8 @@ SCRIPT_PATH=$(dirname "${BASH_SOURCE[0]}")
 
 echo "[INFO] $(date -u +"%Y-%m-%d %H:%M:%S") Delete Keycloak & Keycloak Operator"
 kubectl delete -n ${NAMESPACE} -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/examples/keycloak/keycloak.yaml
-kubectl delete -n ${NAMESPACE} -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/operator.yaml
+#kubectl delete -n ${NAMESPACE} -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/operator.yaml
+curl -s https://raw.githubusercontent.com/keycloak/keycloak-operator/${KEYCLOAK_VERSION}/deploy/operator.yaml | sed "s#Always#IfNotPresent#g" | kubectl delete -n ${NAMESPACE} -f -
 kubectl delete -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/crds/keycloak.org_keycloakusers_crd.yaml
 kubectl delete -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/crds/keycloak.org_keycloaks_crd.yaml
 kubectl delete -f https://github.com/keycloak/keycloak-operator/raw/${KEYCLOAK_VERSION}/deploy/crds/keycloak.org_keycloakclients_crd.yaml
